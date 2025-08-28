@@ -1,0 +1,198 @@
+@font-face {
+    font-family: 'CeraPro Light';
+    src: url("../../static/fonts/CeraPro-Light.ttf") format('truetype');
+}
+
+body,
+.modal-content {
+    color: #d1cdc7;
+    font-family: 'CeraPro Light';
+    background-color: #111214;
+}
+
+@media (min-width: 360px) and (max-width: 768px) {
+    body {
+        box-shadow: none;
+    }
+}
+
+.btn-lg,
+.nav-link.active {
+    color: #d1cdc7 !important;
+    border-radius: .75rem;
+}
+
+.file-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .75rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    border: 1px solid #242424;
+    overflow: hidden;
+}
+
+.file_uploader {
+    height: 30vh;
+    width: 85vw;
+    max-width: 450px;
+    outline: 3px dashed #d1cdc7;
+    cursor: pointer;
+    background: radial-gradient(circle, #484b51 0.5px, #111214 0.5px);
+    background-size: 20px 20px;
+}
+
+.file_uploader.dragover {
+    outline: 3px dashed #484b51;
+}
+
+
+.color-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+}
+
+
+
+@media (min-width: 360px) and (max-width: 768px) {
+    .modal-dialog {
+        align-items: end;
+    }
+}
+
+.modal.fade .modal-dialog {
+    transform: translate(0, 50px);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+.modal {
+    overflow: hidden;
+}
+
+.modal.fade .modal-dialog {
+    transition: transform 0.1s ease-out;
+}
+
+
+.selected-color {
+    border: 2px dashed #252423;
+}
+
+.color-option {
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    top: 2px;
+    left: 5px;
+    width: 35px;
+    height: 18px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.dockbar {
+    position: fixed;
+    background-color: #141517;
+    border: 1px solid #1b1c1e;
+    border-radius: 1.5rem;
+    height: 50px;
+    z-index: 1;
+    bottom: .75rem;
+    left: .75rem;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .25rem;
+}
+
+.dockbar .button {
+    width: 50px;
+    height: 100%;
+    border-radius: 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fcfcfc;
+}
+
+.dockbar .button.active {
+    background-color: #242424;
+}
+
+/* Для Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Для Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #1d1e20;
+    transition: .25s;
+}
+
+.dark .slider {
+    border: 1px solid #ffffff;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #1d1e20;
+    transition: .25s;
+}
+
+.dark .slider:before {
+    background-color: #ffffff;
+}
+
+input:checked+.slider:before {
+    transform: translateX(18px);
+}
+
+.slider.round {
+    border-radius: 32px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

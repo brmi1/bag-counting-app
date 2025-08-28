@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="h-100">
+
+<head>
+    <title>Bag Counting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="static/icons/favicon.svg" type="image/svg+xml">
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="d-flex h-100 text-center">
+    <div class="modal fade p-2" id="select_model" tabindex="-1" aria-modal="true" role="dialog" data-selected-model="YOLOv8s">
+        <div class="modal-dialog modal-dialog-centered p-md-5">
+            <div class="modal-content rounded-4 px-2 py-1" style="border-color: #252423;">
+                <div
+                    class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-1 w-100 option tour dark"
+                    style="cursor: pointer; height: 60px; background-color: #111214; border-color: #252423; color: #d1cdc7; user-select: none;"
+                >
+                    <div class="col-10 d-flex flex-column justify-content-center align-items-start ps-3 pe-none" style="line-height: 1.25;">
+                        <div class="d-flex flex-row justify-content-center align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
+                            </svg>
+                            <label style="font-size: 1.1rem;">YOLOv8s</label>
+                        </div>
+                        <label style="font-size: 0.85rem; color: rgb(100, 100, 100);">Более точная, занимает больше времени</label>
+                    </div>
+                    <div class="col-2 d-flex align-items-center justify-content-center px-2 pe-none">
+                        <div class="chevron">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-1 w-100 option tour dark"
+                    style="cursor: pointer; height: 60px; background-color: #111214; border-color: #252423; color: #d1cdc7; user-select: none;"
+                >
+                <div class="col-10 d-flex flex-column justify-content-center align-items-start ps-3 pe-none" style="line-height: 1.25;">
+                    <div class="d-flex flex-row justify-content-center align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                            <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41z"/>
+                        </svg>
+                        <label style="font-size: 1.1rem;">YOLOv8n</label>
+                    </div>
+                    <label style="font-size: 0.85rem; color: rgb(100, 100, 100);">Самая быстрая, может ошибаться</label>
+                </div>
+                    <div class="col-2 d-flex align-items-center justify-content-center px-2 pe-none">
+                        <div class="chevron d-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'components/dockbar.html' %}
+
+    <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div class="position-relative mx-auto my-auto" style="max-width: 99%; width: 400px;">
+            <div id="select_file_card" class="position-relative py-3 d-flex flex-column align-items-center">
+                <label class="fs-1 lh-1 mb-3" style="user-select: none;">
+                    Приступим
+                </label>
+                <div
+                    class="card file_uploader my-3 rounded-4 d-flex flex-column justify-content-center align-items-center"
+                    onclick="this.querySelector('.file-input').click()"
+                >
+                    <div class="p-2 rounded-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#d1cdc7" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+                        </svg>
+                    </div>
+
+                    <label style="color: rgb(194, 194, 194); font-size: 1.2rem; line-height: 1.1;">Выберите или перетащите<br>видео для обработки</label>
+                    <label style="color: rgb(100, 100, 100); font-size: 0.9rem; line-height: 2;">размер не более 100 MB</label>
+
+                    <input class="file-input d-none" type="file" accept=".mp4" onchange="add_file()">
+                </div>
+                <button class="btn btn-lg text-white bg-dark mt-3 mb-2 disabled">Далее</button>
+            </div>
+
+            <div id="upload_file_card"  class="d-none position-relative py-3 d-flex flex-column align-items-center">
+                <label class="fs-1 lh-1 mb-3" style="user-select: none;">
+                    Дождитесь загрузки
+                </label>
+                
+                <div class="file p-2 d-flex flex-row align-items-center rounded-4" style="width: 350px; border: 1px solid #252423;">
+                    <div class="file-icon">
+                        <svg viewBox="0 0 100 100" style="border-radius: 0.5rem;">
+                            <rect width="100" height="100" fill="#181818" />
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#242424" stroke-width="80" stroke-dasharray="0 251" transform="rotate(-90 50 50)" style="transition: stroke-dasharray 0.5s ease; stroke-dasharray: var(--progress, 0) 251;" />
+                        </svg>
+                        <div style="position: absolute;">MP4</div>
+                    </div>
+
+                    <div class="d-flex flex-column text-start" style="max-width: calc(100% - 90px);">
+                        <div class="file-name text-truncate mx-2" style="font-size: 1.1rem;"></div>
+                        <div class="file-size text-truncate mx-2" style="font-size: 0.85rem;"></div>
+                    </div>
+                    <button class="btn btn-outline-danger ms-auto" style="width: 45px; height: 45px; border-radius: .75rem;" onclick="delete_file()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <button class="btn btn-lg text-white bg-dark mt-3 mb-2 disabled" onclick="show_options_card()">Далее</button>
+            </div>
+
+            <div id="options_card"  class="d-none position-relative py-3 d-flex flex-column align-items-center">
+                <label class="fs-1 lh-1 mb-3" style="user-select: none;">
+                    Выберите настройки
+                </label>
+                
+                <div class="w-100 my-1">
+                    <div
+                        class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-3 w-100 option tour dark"
+                        style="background-color: #181a1b; border-color: #252423; color: #d1cdc7; cursor: pointer; user-select: none;"
+                        onclick="togglePanel(event)"
+                    >
+                        <div class="col-10 d-flex justify-content-start align-items-center ps-3 border-end" style="border-color: #3c3733 !important;">
+                            <label style="font-size: 1.1rem;">Линия счетчика</label>
+                        </div>
+                        <div class="col-2 d-flex align-items-center px-2">
+                            <label class="switch">
+                                <input id="counterLine" type="checkbox" name="dark_theme" class="dark" checked="true" onclick="event.stopPropagation()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-none" style="padding: 0 0.5rem; border-radius: 0 0 1rem 1rem; border: 1px solid #252423; border-top: none;">
+                        <div
+                            id="counterLineColor"
+                            class="color-selector card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-2 w-100 option tour dark"
+                            style="cursor: pointer; height: 60px; background-color: #181a1b; border-color: #252423; color: #d1cdc7;"
+                            data-selected-color="primary"
+                            onclick="selectColor(this)"
+                        >
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3">
+                                <label style="font-size: 1rem; user-select: none;">Цвет линии</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center justify-content-end px-2">
+                                <div class="rounded-circle" style="width: 40px; height: 40px; background-color: #0d6efd;"></div>
+                            </div>
+                        </div>
+
+                        <div class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-2 w-100 option tour dark" style="cursor: pointer; background-color: #181a1b; border-color: #252423; color: #d1cdc7;">
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3 pe-none border-2" style="border-color: #252423 !important;">
+                                <label style="font-size: 1rem; user-select: none;">Порог реагирования</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center px-2">
+                                <input id="threshold" type="number" class="form-control rounded-3 p-2" value="15" style="background-color: #181a1b; border-color: #252423; color: #d1cdc7; text-align: center;"onchange="this.value = Math.max(10, Math.min(20, this.value))" onkeypress="if(event.key === 'Enter') this.blur();">
+                            </div>
+                        </div>
+
+                        <div class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-3 my-2 w-100 option tour dark" style="cursor: pointer; background-color: #181a1b; border-color: #252423; color: #d1cdc7;">
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3 pe-none border-2" style="border-color: #252423 !important;">
+                                <label style="font-size: 1rem; user-select: none;">Отображать зону реагирования</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center px-2">
+                                <label class="switch">
+                                    <input id="showResponseZone" type="checkbox" name="dark_theme" class="dark">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-100 my-1">
+                    <div
+                        class="line_count_option card d-flex flex-row justify-content-center align-items-center rounded-4 py-3 w-100 option tour dark"
+                        style="background-color: #181a1b; border-color: #252423; color: #d1cdc7; cursor: pointer; user-select: none;"
+                        onclick="togglePanel(event)"
+                    >
+                        <div class="col-10 d-flex justify-content-start align-items-center ps-3 border-end" style="border-color: #3c3733 !important;">
+                            <label style="font-size: 1.1rem;">Рамка объекта</label>
+                        </div>
+                        <div class="col-2 d-flex align-items-center px-2">
+                            <label class="switch">
+                                <input id="objectFrame" type="checkbox" name="dark_theme" class="dark" checked="true" onclick="event.stopPropagation()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="line_count_additional d-none" style="padding: 0 0.5rem; border-radius: 0 0 1rem 1rem; border: 1px solid #252423; border-top: none;">
+                        <div
+                            id="objectFrameColor"
+                            class="color-selector card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-2 w-100 option tour dark"
+                            style="cursor: pointer; height: 60px; background-color: #181a1b; border-color: #252423; color: #d1cdc7;"
+                            data-selected-color="warning"
+                            onclick="selectColor(this)"
+                        >
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3">
+                                <label style="font-size: 1rem; user-select: none;">Цвет рамки</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center justify-content-end px-2">
+                                <div class="rounded-circle" style="width: 40px; height: 40px; background-color: #ffc107;"></div>
+                            </div>
+                        </div>
+
+                        <div class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-3 my-2 w-100 option tour dark" style="cursor: pointer; background-color: #181a1b; border-color: #252423; color: #d1cdc7;">
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3 pe-none border-2" style="border-color: #252423 !important;">
+                                <label style="font-size: 1rem; user-select: none;">Отображать наименование класса</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center px-2">
+                                <label class="switch">
+                                    <input id="showClassName" type="checkbox" name="dark_theme" class="dark" checked="true">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-3 my-2 w-100 option tour dark" style="cursor: pointer; background-color: #181a1b; border-color: #252423; color: #d1cdc7;">
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3 pe-none border-2" style="border-color: #252423 !important;">
+                                <label style="font-size: 1rem; user-select: none;">Отображать вероятность класса</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center px-2">
+                                <label class="switch">
+                                    <input id="showClassProbability" type="checkbox" name="dark_theme" class="dark" checked="true">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-3 my-2 w-100 option tour dark" style="cursor: pointer; background-color: #181a1b; border-color: #252423; color: #d1cdc7;">
+                            <div class="col-10 d-flex justify-content-start align-items-center ps-3 pe-none border-2" style="border-color: #252423 !important;">
+                                <label style="font-size: 1rem; user-select: none;">Отображать центр рамки</label>
+                            </div>
+                            <div class="col-2 d-flex align-items-center px-2">
+                                <label class="switch">
+                                    <input id="showCenter" type="checkbox" name="dark_theme" class="dark">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    id="textColor"
+                    class="color-selector card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-1 w-100 option tour dark"
+                    style="cursor: pointer; height: 60px; background-color: #181a1b; border-color: #252423; color: #d1cdc7;"
+                    data-selected-color="light"
+                    onclick="selectColor(this)"
+                >
+                    <div class="col-10 d-flex justify-content-start align-items-center ps-3">
+                        <label style="font-size: 1.1rem; user-select: none;">Цвет текста</label>
+                    </div>
+                    <div class="col-2 d-flex align-items-center justify-content-end px-2">
+                        <div class="rounded-circle bg-light" style="width: 40px; height: 40px; background-color: y#f8f9fa;"></div>
+                    </div>
+                </div>
+
+                <div
+                    class="card d-flex flex-row justify-content-center align-items-center rounded-4 py-2 my-1 w-100 option tour dark"
+                    style="cursor: pointer; height: 60px; background-color: #181a1b; border-color: #252423; color: #d1cdc7;"
+                    data-bs-toggle="modal" data-bs-target="#select_model"
+                >
+                    <div class="col-10 d-flex justify-content-start align-items-center ps-3 pe-none">
+                        <label style="font-size: 1.1rem; user-select: none;">Модель</label>
+                    </div>
+                    <div class="col-2 d-flex align-items-center justify-content-end px-2 pe-none">
+                        <div class="chevron">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg text-white bg-dark mt-3 mb-2" onclick="processing()">Далее</button>
+
+                <label class="mt-2" style="width: 300px; line-height: 1.25; color: rgb(100, 100, 100); user-select: none;">Можно оставить все как есть – мы подобрали лучшие параметры</label>
+            </div>
+
+            <div id="processing"  class="d-none position-relative py-3 d-flex flex-column align-items-center">
+                <div class="file-icon" style="width: 90px; height: 90px; border-radius: 1.5rem; font-size: 1.5rem;">
+                    <svg viewBox="0 0 100 100" style="border-radius: 0.5rem;">
+                        <rect width="100" height="100" fill="#181818" />
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#242424" stroke-width="80" stroke-dasharray="0 251" transform="rotate(-90 50 50)" style="transition: stroke-dasharray 0.5s ease; stroke-dasharray: var(--progress, 0) 251;" />
+                    </svg>
+                    <div class="percent" style="position: absolute;">MP4</div>
+                </div>
+                <label class="ms-2 mt-3">Обработка...</label>
+            </div>
+
+            <div class="toast-container position-fixed bottom-0 end-0 p-4"></div>
+        </div>
+    </div>
+</body>
+
+<script src="static/js/main.js"></script>
+
+</html>

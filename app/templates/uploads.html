@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="h-100">
+
+<head>
+    <title>Bag Counting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="static/icons/favicon.svg" type="image/svg+xml">
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="d-flex h-100 text-center">
+    {% include 'components/dockbar.html' %}
+
+    <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div id="files-container" class="position-relative mx-auto h-100" style="max-width: 99%; width: 360px;">
+            <div id="null-text" class="d-flex align-items-center justify-content-center h-100 fs-5">
+                Тут появятся обработанные файлы
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const container = document.getElementById('files-container')
+
+    var files = JSON.parse(localStorage.getItem('files')) || []
+
+    if (files.length) {
+        document.getElementById('null-text').classList.add('d-none')
+
+        files.forEach(file => {
+            const fileElement = document.createElement('div')
+            fileElement.className = 'file p-2 d-flex flex-row align-items-center rounded-4 mb-2'
+            fileElement.style.cssText = 'width: 100%; border: 1px solid #252423;'
+
+            fileElement.innerHTML = `
+                <div class="file-icon" style="background-color: #242424;">
+                    <div style="position: absolute;">MP4</div>
+                </div>
+
+                <div class="d-flex flex-column text-start" style="max-width: calc(100% - 90px);">
+                    <div class="file-name text-truncate mx-2" style="font-size: 1.1rem;">${file.name}</div>
+                    <div class="file-size text-truncate mx-2" style="font-size: 0.85rem; color: rgb(100, 100, 100);">${file.processed_size ? formatFileSize(file.processed_size)  : 'В обработке'}</div>
+                </div>
+                <a href="/download/${file.file_id}.mp4" class="btn btn-outline-primary ms-auto d-flex justify-content-center align-items-center ${file.processed_size ? '' : 'disabled'}" style="width: 45px; height: 45px; border-radius: .75rem;" onclick="delete_file()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                    </svg>
+                </a>
+            `;
+            
+            container.appendChild(fileElement)
+        })
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 B'
+
+        const k = 1024
+        const sizes = ['B', 'KB', 'MB', 'GB']
+        const i = Math.floor(Math.log(bytes) / Math.log(k))
+        const value = bytes / Math.pow(k, i)
+
+        const formattedValue = value % 1 === 0 ? value.toString() : value.toFixed(2)
+        
+        return formattedValue + ' ' + sizes[i]
+    }
+
+
+    var files = JSON.parse(localStorage.getItem('files')) || []
+    files = files.filter(file => !file.processed_size)
+
+    function pollProgress() {
+        var xhttp = new XMLHttpRequest()
+
+        xhttp.onload = function() {
+            if (xhttp.status == 200) {
+                const completed_files = JSON.parse(xhttp.responseText).completed_files
+
+                if (completed_files.length) {
+                    completed_files.forEach(file => {
+                        updateProcessedSize(file.file_id, file.processed_size)
+                    })
+
+                    window.location = '/uploads'
+                } else {
+                    setTimeout(pollProgress, 5000)
+                }
+            }
+        }
+
+        xhttp.open('POST', '/uploads-progress/')
+        xhttp.send(JSON.stringify(files.map((file) => file.file_id)))
+    }
+
+    pollProgress()
+
+    function updateProcessedSize(file_id, value) {
+        const files = JSON.parse(localStorage.getItem('files')) || []
+
+        const updatedFiles = files.map(file => {
+            if (file.file_id == file_id) {
+                return {
+                    ...file,
+                    processed_size: value
+                }
+            }
+            return file
+        })
+
+        localStorage.setItem('files', JSON.stringify(updatedFiles))
+    }
+</script>
+
+</html>
